@@ -70,10 +70,15 @@ WSGI_APPLICATION = 'portfolio.wsgi.application'
 
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
+        'ENGINE': 'django.db.backends.postgresql_psycopg2',
+        
     }
 }
+
+DATABASES['default'] = dj_database_url.config(default='postgres://npysttwbtkxotj:0aaf94f8462a6955a7149093f692ba8220f3c6a0d3eab0591ff529d5bb244189@ec2-54-227-246-152.compute-1.amazonaws.com:5432/d948cbkpirsl2s')
+db_from_env = dj_database_url.config(conn_max_age=600) #setting up time for security purpose
+
+DATABASES['default'].update(db_from_env) # so that any changes on the admin or code get reflected to the database(thorugh URI)
 
 
 # Password validation
